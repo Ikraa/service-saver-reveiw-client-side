@@ -1,29 +1,31 @@
 import React, { useEffect } from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { UNSAFE_LocationContext, useNavigate } from 'react-router-dom';
+import { useAuthState, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useActionData, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../firebase.config';
 
 const SocialLogin = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-    const location = UNSAFE_LocationContext();
+    const [loginuser,loadingtwo]=useAuthState(auth)
+    const location = useLocation()
     const from = location?.state?.from?.pathname || "/";
     const navigate = useNavigate();
     
-    useEffect(() => {
-      if (user) {
-        navigate(from, { replace: true });
-      }
-    }, []);
-g
+  
+     
+   
+
     
     let lodingElement;
-    if (loading) {
+    if (loading ||  loadingtwo) {
       lodingElement = (
         <div className="  w-full flex justify-center items-center">
          loading...
         </div>
       );
     }
+    if (loginuser) {
+        navigate("/");
+      }
   
     //error container
     let errorElement;
@@ -37,7 +39,7 @@ g
     return (
         <>
          {loading && lodingElement}
-        {errorElement}
+         {errorElement}
         <button
         onClick={() => signInWithGoogle()}
         className="shadow-gray-900 shadow-md text-[#5468FF] w-full hover:text-white hover:bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center"
