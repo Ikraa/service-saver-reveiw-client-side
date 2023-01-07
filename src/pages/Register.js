@@ -3,44 +3,35 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import SocialLogin from "./SocialLogin";
-// import {
-//   useCreateUserWithEmailAndPassword,
-//   useSendPasswordResetEmail,
-//   useUpdateProfile,
-// } from "react-firebase-hooks/auth";
-// import { useNavigate } from "react-router-dom";
-// import auth from "../../../../firebase.config";
-// import useToken from "../../../../hooks/useToken";
-// import Loading from "../../../Shared/Loading/Loading";
-// import Social from "../Social/Social";
-// import { Helmet } from "react-helmet-async";
-// import { toast } from "react-toastify";
-// import Footer from "../../../Shared/Footer/Footer";
-// import Menubar from "../../../Shared/Menubar/Menubar";
+import {
+  useCreateUserWithEmailAndPassword,
+
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
+import auth from "../firebase.config";
+
+
 
 const Register = () => {
   const navigate = useNavigate();
   const emailRef = useRef();
-//   const [createUserWithEmailAndPassword, user, loading, error] =
-//     useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
-//   const [sendPasswordResetEmail, sending, resetError] =
-//     useSendPasswordResetEmail(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
 
-//   const [token] = useToken(user);
-//   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
-    password: "",
-    confirmPass: "",
+    password: ""
+  
   });
 
-//   useEffect(() => {
-//     if (token) {
-//       navigate("/home");
-//     }
-//   }, [token]);
+  useEffect(() => {
+    if (user ) {
+      navigate("/");
+    }
+  }, []);
 
   const [errors, setErrors] = useState({
     emailError: "",
@@ -77,53 +68,27 @@ const Register = () => {
       setNewUser({ ...newUser, password: "" });
     }
   };
-  const handleConfirmPassword = (e) => {
-    if (newUser.password === e.target.value) {
-      setNewUser({ ...newUser, confirmPass: e.target.value });
-      setErrors({ ...errors, confirmPasserror: "" });
-    } else {
-      setErrors({ ...errors, confirmPasserror: "Password not match" });
-      setNewUser({ ...newUser, confirmPass: "" });
-    }
-  };
 
-  //handle login
   const handleRegister = async (e) => {
     e.preventDefault();
-    // await createUserWithEmailAndPassword(newUser.email, newUser.confirmPass);
-    // await updateProfile({ displayName: newUser.name });
+    await createUserWithEmailAndPassword(newUser.email, newUser.password);
+    await updateProfile({ displayName: newUser.name });
   };
   //loading component
 
-//   if (loading || sending) {
-//     return (
-//       <div className=" h-[40vh] w-full flex justify-center items-center">
-//         <Loading />
-//       </div>
-//     );
-//   }
-  //error
-//   let errorElement;
-//   if (error) {
-//     errorElement = (
-//       <p className="text-red-900 text-sm text-center font-semibold">
-//         {error.message}
-//       </p>
-//     );
-//   }
-  //reset Password
-
-//   const resetPassword = async (e) => {
-//     const email = emailRef.current.value;
-
-//     if (email) {
-//       await sendPasswordResetEmail(email);
-//       toast.success("Mail Sent");
-//     } else {
-//       toast.error("please enter your email address");
-//     }
-//   };
-
+  if (loading) {
+    return 
+  }
+ 
+  let errorElement;
+  if (error) {
+    errorElement = (
+      <p className="text-red-900 text-sm text-center font-semibold">
+        {error.message}
+      </p>
+    );
+  }
+ 
   return (
     <>
       <Menubar />
@@ -168,20 +133,10 @@ const Register = () => {
                 {errors.passwordError}
               </p>
             </div>
-            <div className="mb-5">
-              <input
-                onChange={handleConfirmPassword}
-                className="w-full outline-none border-2 pl-5 rounded-xl py-3"
-                type="password"
-                placeholder="Confirm Password"
-              />
-              <p className="text-red-600 text-sm font-semibold mt-2">
-                {errors.confirmPasserror}
-              </p>
-            </div>
+           
             <div className="mb-4">
-              {/* {errorElement} */}
-              <button type="submit" className="button-29 w-full">
+              {errorElement}
+              <button type="submit" className="button-29 w-full bg-primary">
                 Register
               </button>
             </div>
