@@ -4,24 +4,22 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import Menubar from "../components/Menubar";
 import Footer from "../components/Footer";
 import SocialLogin from "./SocialLogin";
+import auth from "../firebase.config";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const emailRef = useRef();
 
-//   const [signInWithEmailAndPassword, signInUser, loading, error] =
-//     useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, signInUser, loading, error] =
+    useSignInWithEmailAndPassword(auth);
 
-  //create jwt token
-//   const [token] = useToken(signInUser);
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
-//   const [sendPasswordResetEmail, sending, resetError] =
-//     useSendPasswordResetEmail(auth);
 
-  //loading component
+
+  
 
   const [errors, setErrors] = useState({
     emailError: "",
@@ -58,58 +56,41 @@ const Login = () => {
 
   //navigate after get token
 
-//   useEffect(() => {
-//     if (token) {
-//       navigate(from, { replace: true });
-//     }
-//   }, [token]);
+  useEffect(() => {
+    if (signInUser) {
+      navigate(from, { replace: true });
+    }
+  }, []);
 
   //handle login
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const email = user.email;
     const password = user.password;
-    // signInWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(email, password);
   };
-//   if (loading || sending) {
-//     return (
-//       <div className=" h-[40vh] w-full flex justify-center items-center">
-//         <Loading />
-//       </div>
-//     );
-//   }
+  if (loading) {
+    return 
+  }
 
-//   let errorElement;
-//   if (error) {
-//     errorElement = (
-//       <p className="text-red-900 text-sm text-center font-semibold">
-//         {error.message}
-//       </p>
-//     );
-//   }
-  //reset Password
-
-//   const resetPassword = async (e) => {
-//     const email = emailRef.current.value;
-
-//     if (email) {
-//       await sendPasswordResetEmail(email);
-//       toast.success("Sent email successfully");
-//     } else {
-//       toast.error("please enter your email address");
-//     }
-//   };
+  let errorElement;
+  if (error) {
+    errorElement = (
+      <p className="text-red-900 text-sm text-center font-semibold">
+        {error.message}
+      </p>
+    );
+  }
+console.log(signInUser,"sign in user")
 
   return (
     <>
       <Menubar />
       <main className="h-fit  py-16 flex justify-center lg:pt-5 login-container mx-auto">
-        {/* <Helmet>
-          <title>login</title>
-        </Helmet> */}
+      
 
         <div className="w-[400px] rounded-md h-fit   bg-white border-2  mt-5 py-10 px-8">
-          {/* <Social /> */}
+         
          
 
           <h1 className=" text-xl text-center font-bold text-[#000002]">
@@ -147,31 +128,14 @@ const Login = () => {
               </p>
             </div>
             <div className="mb-4">
-              {/* {errorElement} */}
-              <button type="submit" className="button-29 w-full">
+              {errorElement}
+              <button type="submit"  className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center">
                 Login
               </button>
             </div>
             <div className="text-center">
-              <p className="text-sm text-gray-900 font-semibold">
-                Don't have a account?
-                <button
-                  onClick={() => navigate("/register")}
-                  className="text-[#5468FF] font-bold"
-                >
-                  Register
-                </button>
-              </p>
-              <p className="text-sm text-gray-900 font-semibold">
-                Forget password?
-                <button
-                //   onClick={resetPassword}
-                  className="text-[#aa4747] font-bold"
-                >
-                  Reset
-                </button>
-
-              </p>
+              
+             
             <SocialLogin />
             </div>
           </form>

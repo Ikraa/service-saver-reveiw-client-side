@@ -136,7 +136,7 @@ const Register = () => {
            
             <div className="mb-4">
               {errorElement}
-              <button type="submit" className="button-29 w-full bg-primary">
+              <button type="submit"  className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center">
                 Register
               </button>
             </div>
