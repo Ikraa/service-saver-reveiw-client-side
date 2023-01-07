@@ -1,10 +1,15 @@
 import React from 'react';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 const ServiceItem = ({item}) => {
     return (
+        
         <div class="card  bg-base-100 shadow-xl">
-        <figure>
-          <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+             
+        <figure className='cursor-pointer'>
+        <PhotoView  src={item?.url}>
+             <img src={item?.url} alt="Shoes" />
+          </PhotoView>
         </figure>
         <div class="card-body">
           <h2 class="card-title">{item?.name}</h2>
@@ -17,6 +22,7 @@ const ServiceItem = ({item}) => {
           </div>
         </div>
       </div>
+      
     );
 };
 
