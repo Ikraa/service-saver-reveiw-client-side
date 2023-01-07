@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import Services from "./Services";
 
@@ -26,6 +27,7 @@ const Home = () => {
         <h1 className="underline mt-10  text-4xl text-gray-600">Services</h1>
         <Services />
       </section>
+      <Footer />
     </div>
   );
 };

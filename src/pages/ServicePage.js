@@ -1,8 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
+import Footer from "../components/Footer";
+import Menubar from "../components/Menubar";
 import ServiceItem from "./ServiceItem";
 
-const Services = () => {
-    const [show,setShow]=useState(false)
+const ServicePage = () => {
+  const [show, setShow] = useState(false);
   const services = [
     {
       id: 1,
@@ -78,21 +80,24 @@ const Services = () => {
     },
   ];
   return (
- <frameElement>
-    <div className="grid grid-cols-3 gap-3 mt-10">
-      { (!show?services.slice(0,3):services).map((item) => (
-        <>
-        <ServiceItem  item={item} />
-        </>
-      ))}
-     
+    <div>
+      <Menubar />
+      <h1 className="underline mt-10 text-center  text-4xl text-gray-600">
+        Services
+      </h1>
+      <div className="grid grid-cols-3 gap-3 mt-10">
+        {services.map((item) => (
+          <>
+            <ServiceItem  item={item} />
+          </>
+        ))}
+      </div>
+      <div className="flex justify-center my-10">
+        {/* <button  className="w-[300px] btn btn-primary  mx-auto">{false?"See less":"See more"}</button> */}
+      </div>
+      <Footer />
     </div>
-     <div className="flex justify-center my-10">
-
-     <button onClick={()=>setShow(!show)} className="w-[300px] btn btn-primary  mx-auto">{show?"See less":"See more"}</button>
-     </div>
-     </frameElement>
   );
 };
 
-export default Services;
+export default ServicePage;
