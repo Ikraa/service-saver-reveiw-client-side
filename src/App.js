@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AddService from "./pages/AddService";
 import Review from "./pages/Review";
+import Blog from "./pages/Blog/Blog";
 function App() {
   const routes = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ function App() {
     {
       path: "/review",
       element: <Review />,
+    },
+    {
+      path: "/blog",
+      element: <Blog />,
     },
   ]);
   return (

@@ -42,6 +42,12 @@ const Menubar = () => {
             >
               Add Service
             </Link>
+            <Link
+              to="/blog"
+              className="text-white py-2 text-[18px] px-4 mr-[5px] "
+            >
+              Blog
+            </Link>
           </>
         )}
         {!user ? (
