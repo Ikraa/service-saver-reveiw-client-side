@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
+import auth from "../firebase.config";
 
 const ServiceDetails = () => {
+  const [user, loading] = useAuthState(auth);
   const reviews = [
     {
       id: 1,
@@ -77,6 +80,22 @@ const ServiceDetails = () => {
       rating: 5,
     },
   ];
+  const [inputValue, setInputValue] = useState({
+    title: "",
+    rating: "",
+    desc: "",
+    image: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      ...inputValue,
+      email: user?.email,
+      photo: user?.photoURL,
+      userName: user?.displayName,
+    };
+    console.log(data);
+  };
   return (
     <div>
       <Menubar />
@@ -116,7 +135,90 @@ const ServiceDetails = () => {
           Customer Review
         </h1>
         <div className="grid grid-cols-2">
-          <div></div>
+          <div className="w-[90%] mx-auto">
+            {user ? (
+              <>
+                <form className="flex flex-col my-10" onSubmit={handleSubmit}>
+                  <input
+                    required
+                    className=" input-shadow  outline-none mb-3 border pl-5 py-3"
+                    placeholder="Title"
+                    name="title"
+                    type="text"
+                    onChange={(e) =>
+                      setInputValue({ ...inputValue, title: e.target.value })
+                    }
+                    // {...register("name", { required: true })}
+                  />
+                  <input
+                    required
+                    className=" input-shadow border  outline-none mb-3 pl-5 py-3"
+                    name="rating"
+                    onChange={(e) =>
+                      setInputValue({ ...inputValue, rating: e.target.value })
+                    }
+                    placeholder="Rating"
+                    type="number"
+                    // {...register("supplier", { required: true })}
+                  />
+
+                  <input
+                    required
+                    className=" input-shadow border  outline-none mb-3 pl-5 py-3"
+                    value={user?.email}
+                    readOnly
+                    placeholder="Your Email"
+                    type="email"
+                    // {...register("email")}
+                  />
+
+                  <input
+                    required
+                    className=" input-shadow border  outline-none mb-3 pl-5 py-3"
+                    // placeholder="Enter price"
+                    value={user?.displayName}
+                    readOnly
+                    type="text"
+                    // {...register("price")}
+                  />
+                  <input
+                    required
+                    className=" input-shadow border  outline-none mb-3 pl-5 py-3"
+                    placeholder="Image url"
+                    onChange={(e) =>
+                      setInputValue({ ...inputValue, image: e.target.value })
+                    }
+                    // value={user?.displayName}
+
+                    // readOnly
+                    type="text"
+                    // {...register("price")}
+                  />
+                  <textarea
+                    required
+                    className=" input-shadow border  outline-none mb-3 pl-5 py-3"
+                    placeholder="Description"
+                    onChange={(e) =>
+                      setInputValue({ ...inputValue, desc: e.target.value })
+                    }
+                    name="desc"
+                    type="text"
+                    rows={8}
+                    // {...register("description")}
+                  />
+                  <input
+                    required
+                    className="  border border-[#332CF2] rounded hover:bg-[#332CF2] hover:text-white font-bold cursor-pointer pl-5 py-4"
+                    type="submit"
+                  />
+                </form>
+              </>
+            ) : (
+              <h1 className="text-warning font-semibold text-3xl mt-10 text-center">
+                !Please login to add a review....
+              </h1>
+            )}
+          </div>
           <div className="grid grid-cols-2 gap-3 w-[90%] mx-auto mt-10">
             {reviews?.map((item) => (
               <div class="card  bg-base-100 shadow-xl">
