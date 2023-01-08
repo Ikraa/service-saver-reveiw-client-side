@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Menubar from "../components/Menubar";
 import Footer from "../components/Footer";
 import SocialLogin from "./SocialLogin";
@@ -17,9 +17,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-
-
-  
 
   const [errors, setErrors] = useState({
     emailError: "",
@@ -53,7 +50,6 @@ const Login = () => {
   };
   const from = location?.state?.from?.pathname || "/";
 
-
   //navigate after get token
 
   useEffect(() => {
@@ -70,7 +66,7 @@ const Login = () => {
     signInWithEmailAndPassword(email, password);
   };
   if (loading) {
-    return 
+    return;
   }
 
   let errorElement;
@@ -81,18 +77,13 @@ const Login = () => {
       </p>
     );
   }
-console.log(signInUser,"sign in user")
+  console.log(signInUser, "sign in user");
 
   return (
     <>
       <Menubar />
       <main className="h-fit  py-16 flex justify-center lg:pt-5 login-container mx-auto">
-      
-
         <div className="w-[400px] rounded-md h-fit   bg-white border-2  mt-5 py-10 px-8">
-         
-         
-
           <h1 className=" text-xl text-center font-bold text-[#000002]">
             Login With Email
           </h1>
@@ -129,16 +120,26 @@ console.log(signInUser,"sign in user")
             </div>
             <div className="mb-4">
               {errorElement}
-              <button type="submit"  className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center">
+              <button
+                type="submit"
+                className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center"
+              >
                 Login
               </button>
             </div>
-            <div className="text-center">
-              
-             
-            <SocialLogin />
-            </div>
           </form>
+          <div className="text-center">
+            <p className="text-sm text-gray-900 font-semibold">
+              Don't have a account?
+              <button
+                onClick={() => navigate("/register")}
+                className="text-[#5468FF] font-bold"
+              >
+                Register
+              </button>
+            </p>
+            <SocialLogin />
+          </div>
         </div>
       </main>
       <Footer />

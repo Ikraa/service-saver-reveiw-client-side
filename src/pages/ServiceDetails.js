@@ -1,85 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useLoaderData } from "react-router-dom";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import auth from "../firebase.config";
 
 const ServiceDetails = () => {
   const [user, loading] = useAuthState(auth);
-  const reviews = [
-    {
-      id: 1,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 2,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 3,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 4,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 5,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 6,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 7,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 8,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-    {
-      id: 9,
-      name: "10 days premium service",
-      url: "https://f.hubspotusercontent00.net/hubfs/53/important-customer-service.jpg",
-      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quae, deleniti ratione aut, explicabo odio, voluptatum molestias recusandae corporis omnis voluptatibus enim temporibus vitae accusamus ipsam! Quisquam minus odit in non. Quaerat id minima natus molestias saepe rem vitae recusandae, exercitationem sapiente quae explicabo eaque placeat deserunt voluptatem. Magnam, impedit.",
-      price: 345,
-      rating: 5,
-    },
-  ];
+  const serviceDetails = useLoaderData();
+  const [review, setReview] = useState([]);
+  const loadReview = async () => {
+    const res = await fetch(
+      `http://localhost:5000/review/?serviceid=${serviceDetails?._id}`
+    );
+    const data = await res.json();
+    setReview(data);
+  };
+  useEffect(() => {
+    loadReview();
+  }, []);
   const [inputValue, setInputValue] = useState({
     title: "",
     rating: "",
@@ -88,13 +27,32 @@ const ServiceDetails = () => {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!inputValue.image) {
+      return alert("Please provide photo url");
+    }
     const data = {
       ...inputValue,
       email: user?.email,
-      photo: user?.photoURL,
+      photo: user?.photoURL || inputValue?.image,
       userName: user?.displayName,
+      serviceId: serviceDetails?._id,
+      service: serviceDetails,
     };
-    console.log(data);
+
+    fetch("http://localhost:5000/review", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.insertedId) {
+          loadReview();
+          e.target.reset();
+        }
+      });
   };
   return (
     <div>
@@ -106,15 +64,15 @@ const ServiceDetails = () => {
         <div>
           <div className="flex items-center  w-[80%] mx-auto h-[80vh]">
             <div className="grid grid-cols-2 ">
-              <div className="mr-[30px] text-right">
-                <h1 className="text-3xl font-bold">{"course.title"}</h1>
-                <h3 className="font-semibold text-lg mt-2">
-                  {"course?.headline"}
-                </h3>
-                <p className="mt-2">{"course?.description"}</p>
-                {[...Array(3).keys()].map((item) => (
+              <div className="mr-[30px] text-start">
+                <h1 className="text-3xl font-bold">{serviceDetails?.name}</h1>
+                {[...Array(+serviceDetails?.rating).keys()].map((item) => (
                   <i class="fa-sharp fa-solid fa-star text-[#F7AE09]"></i>
                 ))}
+                <h3 className="font-semibold text-lg mt-2">
+                  Price: ${serviceDetails?.price}
+                </h3>
+                <p className="mt-2">{serviceDetails?.desc}</p>
 
                 <div></div>
               </div>
@@ -184,7 +142,7 @@ const ServiceDetails = () => {
                   <input
                     required
                     className=" input-shadow border  outline-none mb-3 pl-5 py-3"
-                    placeholder="Image url"
+                    placeholder="Please provide your image url"
                     onChange={(e) =>
                       setInputValue({ ...inputValue, image: e.target.value })
                     }
@@ -220,21 +178,30 @@ const ServiceDetails = () => {
             )}
           </div>
           <div className="grid grid-cols-2 gap-3 w-[90%] mx-auto mt-10">
-            {reviews?.map((item) => (
-              <div class="card  bg-base-100 shadow-xl">
-                <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+            {review?.map((item) => (
+              <div class="card  bg-base-200  shadow-3xl pt-3 h-[300px]">
+                <figure className="mt-3">
+                  <img
+                    className="h-[50px] w-[50px] rounded-full object-cover"
+                    src={item?.image}
+                    alt="Shoes"
+                  />
                 </figure>
+
+                <p className="text-center">
+                  {" "}
+                  {[...Array(+serviceDetails?.rating).keys()].map((item) => (
+                    <i class="fa-sharp fa-solid fa-star text-[#F7AE09]"></i>
+                  ))}
+                </p>
+                <p className="text-center">{item?.userName}</p>
                 <div class="card-body">
-                  <h2 class="card-title">
-                    Shoes!
-                    <div class="badge badge-secondary">NEW</div>
-                  </h2>
-                  <p>If a dog chews shoes whose shoes does he choose?</p>
-                  <div class="card-actions justify-end">
-                    <div class="badge badge-outline">Fashion</div>
-                    <div class="badge badge-outline">Products</div>
-                  </div>
+                  <h2 class="card-title">{item?.title}</h2>
+                  <p>
+                    <strong>
+                      <small className="text-gray-400">{item?.desc}</small>
+                    </strong>
+                  </p>
                 </div>
               </div>
             ))}

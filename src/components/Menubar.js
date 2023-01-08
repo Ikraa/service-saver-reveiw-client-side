@@ -22,15 +22,24 @@ const Menubar = () => {
         >
           Service
         </Link>
-        <span className="text-white py-2 text-[18px] px-4 mr-[5px] ">
+        <Link
+          to={"/review"}
+          className="text-white py-2 text-[18px] px-4 mr-[5px] "
+        >
           Review
-        </span>
+        </Link>
         {user && (
           <>
-            <Link to="/review" className="text-white py-2 text-[18px] px-4 mr-[5px] ">
+            <Link
+              to="/review"
+              className="text-white py-2 text-[18px] px-4 mr-[5px] "
+            >
               My Review
             </Link>
-            <Link to="/addservice" className="text-white py-2 text-[18px] px-4 mr-[5px] ">
+            <Link
+              to="/addservice"
+              className="text-white py-2 text-[18px] px-4 mr-[5px] "
+            >
               Add Service
             </Link>
           </>
@@ -43,7 +52,12 @@ const Menubar = () => {
             LogIn
           </Link>
         ) : (
-          <button onClick={()=>signOut(auth)} className="btn text-white btn-sm btn-error">Logout</button>
+          <button
+            onClick={() => signOut(auth)}
+            className="btn text-white btn-sm btn-error"
+          >
+            Logout
+          </button>
         )}
       </div>
     </div>

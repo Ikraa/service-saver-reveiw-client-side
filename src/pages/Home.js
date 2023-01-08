@@ -1,9 +1,12 @@
 import React from "react";
+import { useLoaderData } from "react-router-dom";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import Services from "./Services";
 
 const Home = () => {
+  const serviceData = useLoaderData();
+  console.log(serviceData, "srvicedata");
   return (
     <div>
       <Menubar />
@@ -25,7 +28,7 @@ const Home = () => {
 
       <section className="w-[90%] mx-auto">
         <h1 className="underline mt-10  text-4xl text-gray-600">Services</h1>
-        <Services />
+        <Services serviceData={serviceData} />
       </section>
       <Footer />
     </div>

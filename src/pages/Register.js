@@ -5,12 +5,9 @@ import Menubar from "../components/Menubar";
 import SocialLogin from "./SocialLogin";
 import {
   useCreateUserWithEmailAndPassword,
-
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import auth from "../firebase.config";
-
-
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,12 +20,11 @@ const Register = () => {
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
-    password: ""
-  
+    password: "",
   });
 
   useEffect(() => {
-    if (user ) {
+    if (user) {
       navigate("/");
     }
   }, []);
@@ -77,9 +73,9 @@ const Register = () => {
   //loading component
 
   if (loading) {
-    return 
+    return;
   }
- 
+
   let errorElement;
   if (error) {
     errorElement = (
@@ -88,13 +84,11 @@ const Register = () => {
       </p>
     );
   }
- 
+
   return (
     <>
       <Menubar />
       <main className=" h-fit py-16 flex justify-center lg:pt-5 login-container mx-auto">
-        
-
         <div className="w-[400px] rounded-md h-fit   bg-white border-2  mt-5 py-10 px-8">
           {/* <Social /> */}
 
@@ -133,10 +127,13 @@ const Register = () => {
                 {errors.passwordError}
               </p>
             </div>
-           
+
             <div className="mb-4">
               {errorElement}
-              <button type="submit"  className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center">
+              <button
+                type="submit"
+                className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center"
+              >
                 Register
               </button>
             </div>
@@ -151,15 +148,7 @@ const Register = () => {
                   Login
                 </button>
               </p>
-              <p className="text-sm text-gray-900 font-semibold">
-                Forget password?
-                <button
-                //   onClick={resetPassword}
-                  className="text-[#aa4747] font-bold"
-                >
-                  Reset
-                </button>
-              </p>
+
               <SocialLogin />
             </div>
           </form>
