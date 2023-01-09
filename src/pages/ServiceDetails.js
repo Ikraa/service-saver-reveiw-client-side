@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useLoaderData } from "react-router-dom";
+import { toast } from "react-toastify";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import auth from "../firebase.config";
@@ -50,6 +51,7 @@ const ServiceDetails = () => {
       .then((data) => {
         if (data?.insertedId) {
           loadReview();
+          toast.success("Review submitted..");
           e.target.reset();
         }
       });

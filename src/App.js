@@ -11,19 +11,23 @@ import Register from "./pages/Register";
 import AddService from "./pages/AddService";
 import Review from "./pages/Review";
 import Blog from "./pages/Blog/Blog";
+import PrivateAuth from "./pages/PrivateAuth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
       element: <Home />,
-      loader: () => {
+      loader: async () => {
         return fetch("http://localhost:5000/service").then((res) => res.json());
       },
     },
     {
       path: "/service",
       element: <ServicePage />,
-      loader: () => {
+      loader: async () => {
         return fetch("http://localhost:5000/service").then((res) => res.json());
       },
     },
@@ -46,11 +50,20 @@ function App() {
     },
     {
       path: "/addservice",
-      element: <AddService />,
+      element: (
+        <PrivateAuth>
+          <AddService />
+        </PrivateAuth>
+      ),
     },
     {
       path: "/review",
-      element: <Review />,
+      element: (
+        <PrivateAuth>
+          {" "}
+          <Review />
+        </PrivateAuth>
+      ),
     },
     {
       path: "/blog",
@@ -62,6 +75,7 @@ function App() {
       <div className=" ">
         <RouterProvider router={routes} />
       </div>
+      <ToastContainer />
     </PhotoProvider>
   );
 }

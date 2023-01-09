@@ -1,10 +1,12 @@
 import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import auth from "../firebase.config";
-
+import "react-confirm-alert/src/react-confirm-alert.css";
 const Review = () => {
   const [user, loading] = useAuthState(auth);
   const [allReview, setAllReview] = useState([]);
@@ -26,7 +28,26 @@ const Review = () => {
       method: "DELETE",
     })
       .then((res) => res.json())
-      .then((data) => loadReview());
+      .then((data) => {
+        toast.success("Deleted successfully...");
+        loadReview();
+      });
+  };
+  const deleteAlert = (id) => {
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleDelet(id),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
   return (
     <div>
@@ -64,7 +85,7 @@ const Review = () => {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelet(item?._id)}
+                        onClick={() => deleteAlert(item?._id)}
                         className="btn btn-xs ml-[3px] bg-red-600"
                       >
                         Delete

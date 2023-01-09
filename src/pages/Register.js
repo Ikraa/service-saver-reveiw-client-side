@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import SocialLogin from "./SocialLogin";
 import {
   useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import auth from "../firebase.config";
@@ -14,9 +15,12 @@ const Register = () => {
   const emailRef = useRef();
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-
+  const [signInWithGoogle, googleuser, googleloading, googleerror] =
+    useSignInWithGoogle(auth);
   const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  const location = useLocation();
 
+  const form = location?.state?.from?.pathname || "/";
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -67,17 +71,23 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(newUser.email, newUser.password);
-    await updateProfile({ displayName: newUser.name });
+    const data = await createUserWithEmailAndPassword(
+      newUser.email,
+      newUser.password
+    );
+    const res = await updateProfile({ displayName: newUser.name });
+    if (data.user) {
+      navigate(form, { replace: true });
+    }
   };
   //loading component
 
-  if (loading) {
+  if (loading || googleloading) {
     return;
   }
 
   let errorElement;
-  if (error) {
+  if (error || googleerror) {
     errorElement = (
       <p className="text-red-900 text-sm text-center font-semibold">
         {error.message}
@@ -149,7 +159,19 @@ const Register = () => {
                 </button>
               </p>
 
-              <SocialLogin />
+              <button
+                onClick={() => {
+                  signInWithGoogle().then((res) => {
+                    console.log(res, "google");
+                    if (res.user) {
+                      navigate(form, { replace: true });
+                    }
+                  });
+                }}
+                className="shadow-gray-900 shadow-md text-[#5468FF] w-full hover:text-white hover:bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center"
+              >
+                Google Sign In
+              </button>
             </div>
           </form>
         </div>

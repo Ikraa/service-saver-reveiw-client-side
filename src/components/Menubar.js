@@ -22,12 +22,12 @@ const Menubar = () => {
         >
           Service
         </Link>
-        <Link
+        {/* <Link
           to={"/review"}
           className="text-white py-2 text-[18px] px-4 mr-[5px] "
         >
           Review
-        </Link>
+        </Link> */}
         {user && (
           <>
             <Link

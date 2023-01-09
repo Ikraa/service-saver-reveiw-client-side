@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 import Footer from "../components/Footer";
 import Menubar from "../components/Menubar";
 import auth from "../firebase.config";
@@ -32,6 +33,7 @@ const AddService = () => {
       .then((data) => {
         if (data?.insertedId) {
           e.target.reset();
+          toast.success("Service add successfully...");
         }
       });
   };

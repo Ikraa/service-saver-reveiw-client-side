@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+
 import Menubar from "../components/Menubar";
 import Footer from "../components/Footer";
 import SocialLogin from "./SocialLogin";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import auth from "../firebase.config";
+
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const emailRef = useRef();
-
-  const [signInWithEmailAndPassword, signInUser, loading, error] =
-    useSignInWithEmailAndPassword(auth);
-
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -22,6 +23,18 @@ const Login = () => {
     emailError: "",
     passwordError: "",
   });
+  const [signInWithEmailAndPassword, signInuser, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleuser, googleloading, googleerror] =
+    useSignInWithGoogle(auth);
+  const [authUser, authLoading] = useAuthState(auth);
+  const location = useLocation();
+  const form = location?.state?.from?.pathname || "/";
+
+  if (loading || googleloading || authLoading) {
+    return;
+  }
+
   //handleEmail
   const handleEmailChange = (e) => {
     const isEmailValid = /\S+@\S+\.\S+/.test(e.target.value);
@@ -48,36 +61,19 @@ const Login = () => {
       setUser({ ...user, password: "" });
     }
   };
-  const from = location?.state?.from?.pathname || "/";
-
-  //navigate after get token
-
-  useEffect(() => {
-    if (signInUser) {
-      navigate(from, { replace: true });
-    }
-  }, []);
 
   //handle login
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const email = user.email;
     const password = user.password;
-    signInWithEmailAndPassword(email, password);
+    console.log(email, password);
+    signInWithEmailAndPassword(email, password).then((res) => {
+      if (res?.user) {
+        navigate(form, { replace: true });
+      }
+    });
   };
-  if (loading) {
-    return;
-  }
-
-  let errorElement;
-  if (error) {
-    errorElement = (
-      <p className="text-red-900 text-sm text-center font-semibold">
-        {error.message}
-      </p>
-    );
-  }
-  console.log(signInUser, "sign in user");
 
   return (
     <>
@@ -119,7 +115,6 @@ const Login = () => {
               </p>
             </div>
             <div className="mb-4">
-              {errorElement}
               <button
                 type="submit"
                 className="shadow-gray-900 shadow-md text-white w-6/12 mx-auto  bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center"
@@ -138,7 +133,18 @@ const Login = () => {
                 Register
               </button>
             </p>
-            <SocialLogin />
+            <button
+              onClick={() => {
+                signInWithGoogle().then((res) => {
+                  if (res.user) {
+                    navigate(form, { replace: true });
+                  }
+                });
+              }}
+              className="shadow-gray-900 shadow-md text-[#5468FF] w-full hover:text-white hover:bg-[#5468FF] font-bold rounded-lg my-4 py-2 flex items-center justify-center"
+            >
+              Google Sign In
+            </button>
           </div>
         </div>
       </main>
