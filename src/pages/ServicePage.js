@@ -89,9 +89,9 @@ const ServicePage = () => {
         Services
       </h1>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-3 mt-10 w-[90%] mx-auto">
-        {services.map((item) => (
+        {services.map((item, i) => (
           <>
-            <ServiceItem item={item} />
+            <ServiceItem key={i} item={item} />
           </>
         ))}
       </div>

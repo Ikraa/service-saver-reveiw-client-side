@@ -62,8 +62,8 @@ const Review = () => {
         </div>
       ) : (
         <>
-          <div class="table-responsive min-h-screen">
-            <table class="table table-compact w-full">
+          <div className="table-responsive min-h-screen">
+            <table className="table table-compact w-full">
               <thead>
                 <tr>
                   <th style={{ width: "14%" }}>SL</th>
@@ -78,7 +78,7 @@ const Review = () => {
               </thead>
               <tbody>
                 {allReview?.map((item, i) => (
-                  <tr>
+                  <tr key={i}>
                     <th style={{ width: "14% ", wordWrap: "break-word" }}>
                       {i + 1}
                     </th>

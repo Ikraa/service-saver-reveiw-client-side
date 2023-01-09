@@ -10,9 +10,9 @@ const Services = ({ serviceData }) => {
         {(!show && serviceData?.length > 3
           ? serviceData.slice(0, 3)
           : serviceData
-        ).map((item) => (
+        ).map((item, i) => (
           <>
-            <ServiceItem item={item} />
+            <ServiceItem key={item?._id} item={item} />
           </>
         ))}
       </div>

@@ -71,8 +71,11 @@ const ServiceDetails = () => {
             <div className="grid lg:grid-cols-2 grid-cols-1">
               <div className="mr-[30px] text-start">
                 <h1 className="text-3xl font-bold">{serviceDetails?.name}</h1>
-                {[...Array(+serviceDetails?.rating).keys()].map((item) => (
-                  <i class="fa-sharp fa-solid fa-star text-[#F7AE09]"></i>
+                {[...Array(+serviceDetails?.rating).keys()].map((item, i) => (
+                  <i
+                    key={i}
+                    className="fa-sharp fa-solid fa-star text-[#F7AE09]"
+                  ></i>
                 ))}
                 <h3 className="font-semibold text-lg mt-2">
                   Price: ${serviceDetails?.price}
@@ -184,7 +187,10 @@ const ServiceDetails = () => {
           </div>
           <div className="grid grid-cols-2 gap-3 w-[90%] mx-auto mt-10">
             {review?.map((item) => (
-              <div class="card  bg-base-200  shadow-3xl pt-3 h-[300px]">
+              <div
+                key={item?._id}
+                className="card  bg-base-200  shadow-3xl pt-3 h-[300px]"
+              >
                 <figure className="mt-3">
                   <img
                     className="h-[60px] w-[60px] rounded-full object-cover"
@@ -195,13 +201,16 @@ const ServiceDetails = () => {
 
                 <p className="text-center">
                   {" "}
-                  {[...Array(+serviceDetails?.rating).keys()].map((item) => (
-                    <i class="fa-sharp fa-solid fa-star text-[#F7AE09]"></i>
+                  {[...Array(+serviceDetails?.rating).keys()].map((item, i) => (
+                    <i
+                      key={i}
+                      className="fa-sharp fa-solid fa-star text-[#F7AE09]"
+                    ></i>
                   ))}
                 </p>
                 <p className="text-center">{item?.userName}</p>
-                <div class="card-body">
-                  <h2 class="card-title">{item?.title}</h2>
+                <div className="card-body">
+                  <h2 className="card-title">{item?.title}</h2>
                   <p>
                     <strong>
                       <small className="text-gray-400">

@@ -13,13 +13,13 @@ const Home = () => {
     <div>
       <Menubar />
       <div>
-        <div class="hero min-h-screen bg-base-200 banner-container">
-          <div class="hero-content text-center">
-            <div class="max-w-md">
-              <h1 class="text-5xl font-bold text-white">
+        <div className="hero min-h-screen bg-base-200 banner-container">
+          <div className="hero-content text-center">
+            <div className="max-w-md">
+              <h1 className="text-5xl font-bold text-white">
                 All In One Daily Service
               </h1>
-              <p class="py-6 text-white text-xl">
+              <p className="py-6 text-white text-xl">
                 We are organization to help you to develop your life and your
                 life style . We have highly skillful training team. So the we
                 provide our service at low rate, save time, 24 hour service
@@ -27,7 +27,7 @@ const Home = () => {
               </p>
               <button
                 onClick={() => navigate("/login")}
-                class="btn btn-primary"
+                className="btn btn-primary"
               >
                 Get Started
               </button>
