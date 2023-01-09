@@ -12,7 +12,7 @@ const ServiceDetails = () => {
   const [review, setReview] = useState([]);
   const loadReview = async () => {
     const res = await fetch(
-      `http://localhost:5000/review/?serviceid=${serviceDetails?._id}`
+      `https://service-saver.vercel.app/review/?serviceid=${serviceDetails?._id}`
     );
     const data = await res.json();
     setReview(data);
@@ -40,7 +40,7 @@ const ServiceDetails = () => {
       service: serviceDetails,
     };
 
-    fetch("http://localhost:5000/review", {
+    fetch("https://service-saver.vercel.app/review", {
       method: "POST",
       headers: {
         "content-type": "application/json",

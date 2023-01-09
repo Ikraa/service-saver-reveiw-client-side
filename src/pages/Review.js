@@ -11,7 +11,9 @@ const Review = () => {
   const [user, loading] = useAuthState(auth);
   const [allReview, setAllReview] = useState([]);
   const loadReview = async () => {
-    const res = await fetch(`http://localhost:5000/review/${user?.email}`);
+    const res = await fetch(
+      `https://service-saver.vercel.app/review/${user?.email}`
+    );
     const data = await res.json();
     setAllReview(data);
   };
@@ -24,7 +26,7 @@ const Review = () => {
     return;
   }
   const handleDelet = (id) => {
-    fetch(`http://localhost:5000/review/${id}`, {
+    fetch(`https://service-saver.vercel.app/review/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

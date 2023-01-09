@@ -22,7 +22,7 @@ const AddService = () => {
       photo: user?.photoURL,
       userName: user?.displayName,
     };
-    fetch("http://localhost:5000/service", {
+    fetch("https://service-saver.vercel.app/service", {
       method: "POST",
       headers: {
         "content-type": "application/json",

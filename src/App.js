@@ -21,23 +21,27 @@ function App() {
       path: "/",
       element: <Home />,
       loader: async () => {
-        return fetch("http://localhost:5000/service").then((res) => res.json());
+        return fetch("https://service-saver.vercel.app/service").then((res) =>
+          res.json()
+        );
       },
     },
     {
       path: "/service",
       element: <ServicePage />,
       loader: async () => {
-        return fetch("http://localhost:5000/service").then((res) => res.json());
+        return fetch("https://service-saver.vercel.app/service").then((res) =>
+          res.json()
+        );
       },
     },
     {
       path: "/service/:id",
       element: <ServiceDetails />,
       loader: ({ params }) => {
-        return fetch(`http://localhost:5000/service/${params.id}`).then((res) =>
-          res.json()
-        );
+        return fetch(
+          `https://service-saver.vercel.app/service/${params.id}`
+        ).then((res) => res.json());
       },
     },
     {
