@@ -10,7 +10,7 @@ const Menubar = () => {
     return;
   }
   return (
-    <div className="bg-green-500 h-[60px] flex justify-between px-[40px] items-center">
+    <div className="bg-primary h-[60px] flex justify-between px-[40px] items-center">
       <h1 className="text-white text-3xl fnt-bold">Service Saver</h1>
       <div className="menu-link">
         <Link to="/" className="text-white py-2 text-[18px] px-4 mr-[5px] ">
