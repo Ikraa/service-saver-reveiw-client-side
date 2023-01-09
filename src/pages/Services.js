@@ -5,8 +5,8 @@ const Services = ({ serviceData }) => {
   const [show, setShow] = useState(false);
 
   return (
-    <frameElement>
-      <div className="grid grid-cols-3 gap-3 mt-10">
+    <>
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-3 mt-10">
         {(!show && serviceData?.length > 3
           ? serviceData.slice(0, 3)
           : serviceData
@@ -24,7 +24,7 @@ const Services = ({ serviceData }) => {
           {show ? "See less" : "See more"}
         </button>
       </div>
-    </frameElement>
+    </>
   );
 };
 

@@ -88,7 +88,7 @@ const ServicePage = () => {
       <h1 className="underline mt-10 text-center  text-4xl text-gray-600">
         Services
       </h1>
-      <div className="grid grid-cols-3 gap-3 mt-10 w-[90%] mx-auto">
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-3 mt-10 w-[90%] mx-auto">
         {services.map((item) => (
           <>
             <ServiceItem item={item} />

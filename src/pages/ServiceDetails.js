@@ -12,7 +12,7 @@ const ServiceDetails = () => {
   const [review, setReview] = useState([]);
   const loadReview = async () => {
     const res = await fetch(
-      `https://service-saver.vercel.app/review/?serviceid=${serviceDetails?._id}`
+      `https://service-saver.onrender.com/review/?serviceid=${serviceDetails?._id}`
     );
     const data = await res.json();
     setReview(data);
@@ -29,7 +29,10 @@ const ServiceDetails = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!inputValue.image) {
-      return alert("Please provide photo url");
+      return toast.warn("Please provide photo url");
+    }
+    if (inputValue.rating > 5) {
+      return toast.warn("Rating should be less then 6");
     }
     const data = {
       ...inputValue,
@@ -40,7 +43,7 @@ const ServiceDetails = () => {
       service: serviceDetails,
     };
 
-    fetch("https://service-saver.vercel.app/review", {
+    fetch("https://service-saver.onrender.com/review", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -59,13 +62,13 @@ const ServiceDetails = () => {
   return (
     <div>
       <Menubar />
-      <section>
-        <h1 className="text-4xl underline text-center font-bold mt-8">
+      <section className="min-h-screen h-auto">
+        <h1 className="text-4xl underline h-auto text-center font-bold mt-8">
           About This Service
         </h1>
-        <div>
-          <div className="flex items-center  w-[80%] mx-auto h-[80vh]">
-            <div className="grid grid-cols-2 ">
+        <div className="h-auto">
+          <div className="flex items-center  w-[80%] mx-auto lg:h-[80vh] h-auto">
+            <div className="grid lg:grid-cols-2 grid-cols-1">
               <div className="mr-[30px] text-start">
                 <h1 className="text-3xl font-bold">{serviceDetails?.name}</h1>
                 {[...Array(+serviceDetails?.rating).keys()].map((item) => (
@@ -94,7 +97,7 @@ const ServiceDetails = () => {
         <h1 className="text-4xl font-bold text-center underline ">
           Customer Review
         </h1>
-        <div className="grid grid-cols-2">
+        <div className="grid lg:grid-cols-2 grid-cols-1">
           <div className="w-[90%] mx-auto">
             {user ? (
               <>
@@ -184,7 +187,7 @@ const ServiceDetails = () => {
               <div class="card  bg-base-200  shadow-3xl pt-3 h-[300px]">
                 <figure className="mt-3">
                   <img
-                    className="h-[50px] w-[50px] rounded-full object-cover"
+                    className="h-[60px] w-[60px] rounded-full object-cover"
                     src={item?.image}
                     alt="Shoes"
                   />
@@ -201,7 +204,11 @@ const ServiceDetails = () => {
                   <h2 class="card-title">{item?.title}</h2>
                   <p>
                     <strong>
-                      <small className="text-gray-400">{item?.desc}</small>
+                      <small className="text-gray-400">
+                        {item?.desc?.length > 150
+                          ? item?.desc?.slice(0, 150) + "..."
+                          : item?.slice}
+                      </small>
                     </strong>
                   </p>
                 </div>

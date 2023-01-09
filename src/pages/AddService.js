@@ -16,13 +16,16 @@ const AddService = () => {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (inputValue.rating > 5) {
+      return toast.warn("rating should be less than 6");
+    }
     const data = {
       ...inputValue,
       email: user?.email,
       photo: user?.photoURL,
       userName: user?.displayName,
     };
-    fetch("https://service-saver.vercel.app/service", {
+    fetch("https://service-saver.onrender.com/service", {
       method: "POST",
       headers: {
         "content-type": "application/json",

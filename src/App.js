@@ -21,7 +21,7 @@ function App() {
       path: "/",
       element: <Home />,
       loader: async () => {
-        return fetch("https://service-saver.vercel.app/service").then((res) =>
+        return fetch("https://service-saver.onrender.com/service").then((res) =>
           res.json()
         );
       },
@@ -30,7 +30,7 @@ function App() {
       path: "/service",
       element: <ServicePage />,
       loader: async () => {
-        return fetch("https://service-saver.vercel.app/service").then((res) =>
+        return fetch("https://service-saver.onrender.com/service").then((res) =>
           res.json()
         );
       },
@@ -40,7 +40,7 @@ function App() {
       element: <ServiceDetails />,
       loader: ({ params }) => {
         return fetch(
-          `https://service-saver.vercel.app/service/${params.id}`
+          `https://service-saver.onrender.com/service/${params.id}`
         ).then((res) => res.json());
       },
     },

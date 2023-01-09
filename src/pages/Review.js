@@ -12,7 +12,7 @@ const Review = () => {
   const [allReview, setAllReview] = useState([]);
   const loadReview = async () => {
     const res = await fetch(
-      `https://service-saver.vercel.app/review/${user?.email}`
+      `https://servicesaver.vercel.app/review/${user?.email}`
     );
     const data = await res.json();
     setAllReview(data);
@@ -26,7 +26,7 @@ const Review = () => {
     return;
   }
   const handleDelet = (id) => {
-    fetch(`https://service-saver.vercel.app/review/${id}`, {
+    fetch(`https://servicesaver.vercel.app/review/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -62,27 +62,42 @@ const Review = () => {
         </div>
       ) : (
         <>
-          <div class="overflow-x-auto min-h-screen">
+          <div class="table-responsive min-h-screen">
             <table class="table table-compact w-full">
               <thead>
                 <tr>
-                  <th>SL</th>
-                  <th>Service Name</th>
-                  <th>Desc</th>
-                  <th>Email</th>
-                  <th>Rating</th>
-                  <th className="text-center">Action</th>
+                  <th style={{ width: "14%" }}>SL</th>
+                  <th style={{ width: "14%" }}>Service Name</th>
+                  <th style={{ width: "14%" }}>Desc</th>
+                  <th style={{ width: "14%" }}>Email</th>
+                  <th style={{ width: "14%" }}>Rating</th>
+                  <th style={{ width: "14%" }} className="text-center">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {allReview?.map((item, i) => (
                   <tr>
-                    <th>{i + 1}</th>
-                    <td>{item?.service?.name}</td>
-                    <td>{item?.desc}</td>
-                    <td>{item?.email}</td>
-                    <td>{item?.rating}</td>
-                    <td className="text-center">
+                    <th style={{ width: "14% ", wordWrap: "break-word" }}>
+                      {i + 1}
+                    </th>
+                    <td style={{ width: "14% ", wordWrap: "break-word" }}>
+                      {item?.service?.name}
+                    </td>
+                    <td style={{ width: "14% ", wordWrap: "break-word" }}>
+                      <span className="w-[60px] break-words">{item?.desc}</span>
+                    </td>
+                    <td style={{ width: "14% ", wordWrap: "break-word" }}>
+                      {item?.email}
+                    </td>
+                    <td style={{ width: "14% ", wordWrap: "break-word" }}>
+                      {item?.rating}
+                    </td>
+                    <td
+                      style={{ width: "14% ", wordWrap: "break-word" }}
+                      className="text-center"
+                    >
                       <button className="btn btn-xs ml-[3px] bg-green-600">
                         Edit
                       </button>
